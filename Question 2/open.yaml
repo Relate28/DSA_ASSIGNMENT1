@@ -1,0 +1,65 @@
+openapi: "3.0.1"
+info:
+  title: A Virtual Learning Application API
+  version: "0.0.1"
+servers:
+  - url: http://localhost:8080/vle/api/v1
+
+paths:
+  /users:
+    get:
+      summary: Get all users added to the application
+      operationId: get_all
+      description: Returns all users registered for the application
+      responses:
+        "200":
+          description: "A list of users"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    post:
+      summary: Insert a new user
+      operationId: insert
+      description: Create a new user and add it to the collection of users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                description: the username of the user newly created
+                properties:
+                  userid:
+                    type: string
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+  responses:
+    ErrorResponse:      
+      description: The specified resource was not found.
+
+
+# https://learn.openapis.org/specification/paths
+
+# editor.swagger.io
+# https://swagger.io/docs/specification/components/
+# https://spec.openapis.org/oas/v3.1.0#schemaObjectopenapi: "3.0.1"
