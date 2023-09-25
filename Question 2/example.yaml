@@ -1,0 +1,53 @@
+openapi: "3.0.3"
+info:
+  title: API Title
+  version: "1.0"
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /test:
+    get:
+      summary: Get users with filtering
+      parameters: # Define query parameters here
+        - name: name
+          in: query # Location of the parameter (query string)
+          description: Filter users by status
+          required: false
+          schema:
+            type: string
+        - name: userId # Name of the parameter
+          in: path # Location of the parameter (path)
+          required: true # Whether the parameter is required
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+
+
+# string: Represents a sequence of characters (text).
+# number: Represents a numeric value, which can be an integer or a floating-point number.
+# integer: Represents a whole number.
+# boolean: Represents a boolean value (true or false).
+# Complex Data Types:
+
+# object: Represents an object or a complex data structure with properties.
+# array: Represents an array or list of values.
+# null: Represents a null value.
+# Numeric Formats:
+
+# int32: Represents a 32-bit integer.
+# int64: Represents a 64-bit integer.
+# float: Represents a single-precision floating-point number.
+# double: Represents a double-precision floating-point number.
+# String Formats:
+
+# byte: Represents a base64-encoded string.
+# binary: Represents binary data.
+# date: Represents a date (format: YYYY-MM-DD).
+# date-time: Represents a date and time (format: YYYY-MM-DDTHH:MM:SSZ).
+# Other Formats:
+
+# password: Represents a password (used for input only).
+# uuid: Represents a Universally Unique Identifier (UUID).
