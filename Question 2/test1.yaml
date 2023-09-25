@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Staff Management System
+  version: 1.0.0
+  description: API for managing staff, offices, and courses in the Faculty of Computing and Informatics.
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /lecturers:
+    get:
+      summary: Retrieve a list of all lecturers.
+      responses:
+        200:
+          description: List of lecturers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lecturer'
+    post:
+      summary: Add a new lecturer.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lecturer'
+      responses:
+        201:
+          description: Lecturer added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lecturer'
+  /lecturers/{staffNumber}:
+    get:
+      summary: Retrieve the details of a specific lecturer by their staff number.
+      parameters:
+        - name: staffNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Lecturer details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lecturer'
+    put:
+      summary: Update an existing lecturer's information.
+      parameters:
+        - name: staffNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lecturer'
+      responses:
+        200:
+          description: Lecturer updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lecturer'
+    delete:
+      summary: Delete a lecturer's record by their staff number.
+      parameters:
+        - name: staffNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Lecturer deleted successfully.
+  /courses/{courseCode}/lecturers:
+    get:
+      summary: Retrieve all the lecturers that teach a certain course.
+      parameters:
+        - name: courseCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of lecturers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lecturer'
+  /offices/{officeNumber}/lecturers:
+    get:
+      summary: Retrieve all the lecturers that sit in the same office.
+      parameters:
+        - name: officeNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of lecturers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lecturer'
+components:
+  schemas:
+    Lecturer:
+      type: object
+      properties:
+        staffNumber:
+          type: string
+          description: The staff number of the lecturer (unique identifier).
+        officeNumber:
+          type: string
+          description: The office number of the lecturer.
+        staffName:
+          type: string
+          description: The name of the lecturer.
+        title:
+          type: string
+          description: The title of the lecturer.
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+    Course:
+      type: object
+      properties:
+        courseName:
+          type: string
+          description: The name of the course.
+        courseCode:
+          type: string
+          description: The code of the course.
+        nqfLevel:
+          type: integer
+          description: The NQF level of the course.
